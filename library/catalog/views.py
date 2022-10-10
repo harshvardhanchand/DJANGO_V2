@@ -1,5 +1,7 @@
 from django.shortcuts import render
-
+from django.http import HttpResponse
+from .models import Book, Author, BookInstance, Genre, Language
+from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView
 # Create your views here.
 
 
@@ -20,7 +22,17 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(
         request,
-        'index.html',
+        'catalog/index.html',
         context={'num_books': num_books, 'num_instances': num_instances,
                  'num_instances_available': num_instances_available, 'num_authors': num_authors},
     )
+
+
+class BookCreate(CreateView):
+    # book_form.html
+    model = Book
+    fields = '__all__'
+
+
+class BookDetail(DetailView):
+    model = Book
